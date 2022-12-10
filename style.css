@@ -1,0 +1,113 @@
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height: 100%;
+  width: 100%;
+  grid-area: aa;
+  border-radius: 5px;
+
+}
+
+.aa {
+
+  grid-area: bb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+h1{
+  color: black;
+  padding-bottom: 100px;
+  border-radius: 5px;
+  /* font-style: oblique; */
+  font-weight: bold;
+  
+}
+.form {
+  border-radius: 5px;
+  background-color: rgb(236, 222, 222);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 300px;
+  border: 3px solid;
+  border-style: outset;
+  
+
+}
+
+.in :hover{
+  background-color: white;
+}
+
+.in {
+  /* background-color: black; */
+ 
+  margin: 10px;
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: row;
+}
+
+.ip {
+  display: flex;
+  flex-direction: row-reverse;
+  border: 3px solid;
+  border-style: outset;
+  background-color: white;
+}
+.btn-group :hover{ background-color: red;}
+
+input {
+  width: 100%;
+  border: none;
+  /* border: none; */
+  
+}
+
+
+
+
+
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(236, 232, 226);
+  display: grid;
+  grid-template-areas:
+    "dd dd dd dd dd dd dd dd dd dd  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb "
+    "a  aa aa aa aa aa aa c  bb bb "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "a  aa aa aa aa aa aa c  bb bb  "
+    "cc cc cc cc cc cc cc cc cc cc  "
+  ;
+}
