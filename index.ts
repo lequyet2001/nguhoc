@@ -136,14 +136,14 @@ g.addEdge("D", "F", 1);
 g.addEdge("E", "F", 1);
 
 // console.log())
-const a = g.dijkstra("A", "E")
-console.log(a)
+// const a = g.dijkstra("A", "E")
+// console.log(a)
 
 
 
 const PATH_MAIN_MAP = {
-    zoom: 15,
-    center: { lat: 21.004517, lng: 105.845028 },
+    zoom: 10,
+    center: {lat: 25.774, lng: -80.19 },
 }
 
 
@@ -152,25 +152,65 @@ var map
 const submit = document.getElementById('submit');
 submit?.addEventListener('click', () => {
     const a = document.getElementById('start') as HTMLInputElement;
-    const x = a.value.toLocaleUpperCase();
-    const c = document.getElementById('end') as HTMLInputElement;
-    const z = c.value;
     const b = document.getElementById('mid') as HTMLInputElement;
-    const y = b.value.toLocaleUpperCase();
-    const newData1 = [x];
-    const newData2 = [y];
-
-
-
-
+    const c = document.getElementById('end') as HTMLInputElement;
+    const x = a?.value.toLocaleUpperCase();
+    const y = b?.value.toLocaleUpperCase();
+    const z = c?.value.toLocaleUpperCase();
+    const newData1 = [];
+    const newData2 = [];
+    const newData = [];
+//   console.log(g.dijkstra(x,y))
+    data.forEach(d => {
+        g.dijkstra(x, y).find(d2 => {
+            if (d2 === d.name) newData1.push(d);
+        })
+    })
+    data.forEach(d => {
+        g.dijkstra(y, z).find(d2 => {
+            if (d2 === d.name) newData2.push(d);
+        })
+    })
+    console.log(newData1.map(e=>e))
+    console.log(newData2.map(e=>e))
+    // console.log(JSON.stringify(newData))
+    console.log(newData1.some(e=>e.name===z))
+ 
+   
+        const p=newData.concat(newData1,newData2)
+          const flightPath = new google.maps.Polyline({
+            path: p,
+            geodesic: true,
+            strokeColor: "black",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+          });
+        
+          flightPath.setMap(map);
+    
+    
+    console.log(newData1.concat(newData2).map(e=>e))
+    // console.log(JSON.stringify(newData))
+    
 
 })
+
+function addMaker(data){
+    data.forEach(e=>{
+
+        new google.maps.Marker({
+            position: e,
+            map,
+            title: e.name,
+          });
+    })
+}
 function initMap(): void {
-    const map = new google.maps.Map(
+     map = new google.maps.Map(
         document.getElementById("map") as HTMLElement,
         PATH_MAIN_MAP
     );
-
+    addMaker(data)
     const triangleCoords = [
         { lat: 21.007482, lng: 105.841508 },
         { lat: 21.008586, lng: 105.851404 },
