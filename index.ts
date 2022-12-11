@@ -142,7 +142,7 @@ g.addEdge("E", "F", 1);
 
 
 const PATH_MAIN_MAP = {
-    zoom: 15,
+    zoom: 10,
     center: {lat: 25.774, lng: -80.19 },
 }
 
@@ -195,12 +195,22 @@ submit?.addEventListener('click', () => {
 
 })
 
+function addMaker(data){
+    data.forEach(e=>{
+
+        new google.maps.Marker({
+            position: e,
+            map,
+            title: e.name,
+          });
+    })
+}
 function initMap(): void {
      map = new google.maps.Map(
         document.getElementById("map") as HTMLElement,
         PATH_MAIN_MAP
     );
-
+    addMaker(data)
     const triangleCoords = [
         { lat: 21.007482, lng: 105.841508 },
         { lat: 21.008586, lng: 105.851404 },
