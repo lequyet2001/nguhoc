@@ -31,6 +31,7 @@ h1{
   font-weight: bold;
   
 }
+
 .form {
   border-radius: 5px;
   background-color: rgb(236, 222, 222);
@@ -93,21 +94,21 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: rgb(236, 232, 226);
+  background-color: rgb(195, 192, 189);
   display: grid;
   grid-template-areas:
-    "dd dd dd dd dd dd dd dd dd dd  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb "
-    "a  aa aa aa aa aa aa c  bb bb "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "a  aa aa aa aa aa aa c  bb bb  "
-    "cc cc cc cc cc cc cc cc cc cc  "
+    "dd dd dd dd dd dd dd dd dd dd dd dd dd dd dd dd  dd dd dd   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "a  aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa  aa c  bb   "
+    "cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  cc cc cc   "
   ;
 }

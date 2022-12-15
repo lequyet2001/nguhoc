@@ -108,14 +108,7 @@ class weightedGraph {
 
 console.clear();
 
-const data = [
-    { lat: 25.774, lng: -80.19, name: "A" },
-    { lat: 18.466, lng: -66.118, name: "B" },
-    { lat: 32.321, lng: -67.757, name: "C" },
-    { lat: 32.321, lng: -68.757, name: "D" },
-    { lat: 32.321, lng: -69.757, name: "E" },
-    { lat: 32.321, lng: -61.757, name: "F" },
-];
+import { data ,triangleCoords} from "./a";
 
 
 let g = new weightedGraph();
@@ -151,16 +144,18 @@ const PATH_MAIN_MAP = {
 var map
 const submit = document.getElementById('submit');
 submit?.addEventListener('click', () => {
-    const a = document.getElementById('start') as HTMLInputElement;
+    const start=document.getElementById('start') as HTMLInputElement;
+    const StartValue=start.value.toLocaleUpperCase();
+    const a = document.getElementById('diem1') as HTMLInputElement;
     const x = a.value.toLocaleUpperCase();
-    const c = document.getElementById('end') as HTMLInputElement;
+    const c = document.getElementById('diem2') as HTMLInputElement;
     const z = c.value;
-    const b = document.getElementById('mid') as HTMLInputElement;
+    const b = document.getElementById('diem3') as HTMLInputElement;
     const y = b.value.toLocaleUpperCase();
     const newData1 = [x];
     const newData2 = [y];
 
-
+    
 
 
 
@@ -170,13 +165,6 @@ function initMap(): void {
         document.getElementById("map") as HTMLElement,
         PATH_MAIN_MAP
     );
-
-    const triangleCoords = [
-        { lat: 21.007482, lng: 105.841508 },
-        { lat: 21.008586, lng: 105.851404 },
-        { lat: 20.995940, lng: 105.849861 },
-        { lat: 20.997845, lng: 105.841256 },
-    ];
 
     // Construct the polygon.
     const bermudaTriangle = new google.maps.Polygon({
