@@ -1,4 +1,4 @@
-import { Point } from './a'
+import { Point } from './class'
 
 export const data = [
     { lat: 21.00171892770119, lng: 105.84154390295836, name: "1" },
@@ -217,12 +217,6 @@ export const data = [
     { lat: 21.00004449983048, lng: 105.84949888315222, name: "214" },
     { lat: 20.997896207757606, lng: 105.84988026933542, name: "215" },
 ];
-
-
-
-
-
-
 // Sử dụng hàm map
 export const newData: [number, number, string][] = data.map(({ lat, lng, name }) => [lat, lng, name]);
 //  export const points: Point[] = newData.map(([lat, lng, name]) => new Point(lat, lng, name));
@@ -233,4 +227,7 @@ export const triangleCoords = [
     { lat: 20.995940, lng: 105.849861 },
     { lat: 20.997845, lng: 105.841256 },
 ];
+
+export const points: Point[] = newData.map(([lat, lng, name]) => new Point(lat, lng, name));
+
 

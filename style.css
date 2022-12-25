@@ -38,36 +38,46 @@ h1{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 300px;
+  align-items:center;
+  /* width: px; */
+  /* height: 300px; */
   border: 3px solid;
   border-style: outset;
   
 
 }
 
+.buttonGroup{
+
+}
 .in :hover{
   background-color: white;
 }
 
 .in {
   /* background-color: black; */
- 
+ /* min-height: 50px; */
+ /* height: 60px; */
   margin: 10px;
   /* padding: 10px; */
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .ip {
   display: flex;
-  flex-direction: row-reverse;
+  height: 100px;
+  width:100px;
+  /* flex-direction: row; */
+  display: flex;
+  justify-content: center;
   border: 3px solid;
+  border-radius: 10px;
   border-style: outset;
   background-color: white;
 }
-.btn-group :hover{ background-color: red;}
+
+
 
 input {
   width: 100%;
@@ -75,8 +85,15 @@ input {
   /* border: none; */
   
 }
-
-
+button{
+  width: 100px;
+  height: 60px;
+  margin: 6px;
+}
+label{
+  width: 60px;
+ text-align: center;
+}
 
 
 
