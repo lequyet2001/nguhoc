@@ -1,3 +1,5 @@
+
+
 class priorityQueue {
     values;
     constructor() {
@@ -32,7 +34,9 @@ export class weightedGraph {
     add(data) {
         this.addVertex(data);
     }
+   
     addEdge(vertex1, vertex2, weight) {
+        
         this.adjacenyList[vertex1].push({ node: vertex2, weight });
         this.adjacenyList[vertex2].push({ node: vertex1, weight });
     }

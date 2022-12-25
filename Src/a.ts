@@ -18,11 +18,7 @@ export class Point {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c;
-    }
-    addEdge(to:Point){
-    // this.Edges
-    }
-    
+    }        
 }
 export function findShortestPath(points: Point[]): Point[] {
     // Khởi tạo danh sách các điểm đã xét và điểm hiện tại là điểm đầu tiên trong mảng points

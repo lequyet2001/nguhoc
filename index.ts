@@ -1,10 +1,10 @@
 
 // Infinity = 10000;
 
-import {weightedGraph} from "./Src/class"
+import { weightedGraph } from "./Src/class"
 // console.clear();
-import {Point,findShortestPath} from './Src/a'
-import { data,newData,triangleCoords } from "./Src/data";
+import { Point, findShortestPath } from './Src/a'
+import { data, newData, triangleCoords } from "./Src/data";
 
 const points: Point[] = newData.map(([lat, lng, name]) => new Point(lat, lng, name));
 console.log(findShortestPath(points)[1].name)
@@ -14,7 +14,6 @@ console.log("adding vertices -------------------------------");
 points.forEach(e => {
     g.add(e.name)
 });
-
 
 console.log("adding edges -------------------------------");
 g.addEdge("1", "2", 1);
@@ -276,44 +275,104 @@ g.addEdge("210", "212", 1);
 g.addEdge("211", "213", 1);
 g.addEdge("213", "214", 1);
 
-
-const e=document.getElementById("browsers");
-
 const PATH_MAIN_MAP = {
     zoom: 16,
-    center: { lat: 21.001590,lng: 105.845727 },
+    center: { lat: 21.001590, lng: 105.845727 },
 }
 
-interface f {
-    lat:number,
-    lng:number,
-    name:string 
-    
-}
 //loadamap
-var map
-
+let map: google.maps.Map;
+let Marker: google.maps.Marker[] = [];
+let flightPath: google.maps.Polyline;
 const submit = document.getElementById('submit');
 submit?.addEventListener('click', () => {
-    const start=document.getElementById('start') as HTMLInputElement;
-    const StartValue=start.value.toLocaleUpperCase();
+
+    const start = document.getElementById('start') as HTMLInputElement;
     const a = document.getElementById('diem1') as HTMLInputElement;
-    const x = a.value.toLocaleUpperCase();
     const b = document.getElementById('diem2') as HTMLInputElement;
-    const y = b.value.toLocaleUpperCase;
     const c = document.getElementById('diem3') as HTMLInputElement;
+    const StartValue = start.value.toLocaleUpperCase();
+    const x = a.value.toLocaleUpperCase();
+    const y = b.value.toLocaleUpperCase();
     const z = c.value.toLocaleUpperCase();
+    const a1 = g.dijkstra(StartValue, x)
+    const b1 = g.dijkstra(x, y)
+    const c1 = g.dijkstra(y, z)
+    const p: string[] = [];
+    a1.forEach(e => {
+        p.push(e)
+    })
+
+    b1.forEach(e => {
+        p.push(e)
+    })
+    c1.forEach(e => {
+        p.push(e)
+    })
+    // console.log(p)
+
+    const modifiedData = [];
+    const point: Point[] = [];
+    // Iterate through the data array and compare each element to the one before it
+    for (let i = 0; i < p.length; i++) {
+        if (p[i] !== p[i - 1]) {
+            modifiedData.push(p[i]);
+        }
+    }
+    modifiedData.forEach(e => {
+        points.forEach(e2 => {
+            if (e === e2.name) {
+                point.push(e2)
+            }
+        })
+    })
+
+    flightPath = new google.maps.Polyline({
+        path: point,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    flightPath.setMap(map);
 
 
+    // console.log(modifiedData);  // ['1', '2', '4', '2', '1', '5', '1', '2', '3', '6', '7', '8', '9', '10']
+    point.forEach((e, index) => {
+        console.log(e.name)
+    })
+    console.log(point)
+
+    let m = (e: Point, index: number) => {
+        Marker[index] = new google.maps.Marker({
+            position: e,
+            map,
+            label: e.name,
+        })
+
+        console.log(index)
+    }
+    point.forEach(m)
+
+
+    const rm = document.getElementById('rm');
+    rm?.addEventListener('click',reSet)
+    function reSet() {
+        point.forEach((e, index) => {
+
+            Marker[index].setMap(null)
+            flightPath.setMap(null)
+        })
+    }
 
 })
+
 function initMap(): void {
-    const map = new google.maps.Map(
+    map = new google.maps.Map(
         document.getElementById("map") as HTMLElement,
         PATH_MAIN_MAP
     );
-
-
 
     // Construct the polygon.
     const bermudaTriangle = new google.maps.Polygon({
@@ -328,6 +387,9 @@ function initMap(): void {
     bermudaTriangle.setMap(map);
 
 
+
+
+
 }
 declare global {
     interface Window {
@@ -338,3 +400,4 @@ declare global {
 
 window.initMap = initMap;
 export { };
+
