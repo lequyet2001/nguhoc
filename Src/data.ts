@@ -231,3 +231,11 @@ export const triangleCoords = [
 export const points: Point[] = newData.map(([lat, lng, name]) => new Point(lat, lng, name));
 
 
+export interface src{
+    distance:number;
+    path:string[];
+}
+export interface srcPoint{
+    distance:number;
+    path:Point[];
+}

@@ -56,11 +56,11 @@ export class weightedGraph {
         delete this.adjacenyList[vertex];
     }
 
-    dijkstra(start, end) {
+    dijkstra(start:string, end:string) {
         const nodes = new priorityQueue();
         const distances = {};
         const previous = {};
-        let smallest;
+        let smallest:any;
         let path = [];
         let distance=0;
         // build up initial state
@@ -134,7 +134,7 @@ export class Point {
         return R * c;
     }        
 }
-export function findShortestPath(points: Point[],distance:number): Point[] {
+export function findShortestPath(points: Point[]): Point[] {
     // Khởi tạo danh sách các điểm đã xét và điểm hiện tại là điểm đầu tiên trong mảng points
     const visitedPoints: Point[] = [];
     let currentPoint = points[0];

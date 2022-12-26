@@ -1,16 +1,16 @@
-
-import { points, triangleCoords } from "./Src/data";
+import { points, triangleCoords,src,srcPoint } from "./Src/data";
 import { Point, } from './Src/class';
-import { g } from './Src/makedt'
+import { g } from './Src/makedt';
 
 let map: google.maps.Map;
 let Marker: google.maps.Marker[] = [];
 let flightPath: google.maps.Polyline;
-
+const point: Point[] = [];
 const PATH_MAIN_MAP = {
     zoom: 16,
     center: { lat: 21.001590, lng: 105.845727 },
 }
+
 
 function autoAddOptions(selectId: string, options: Point[]) {
     const select = document.getElementById(selectId);
@@ -21,16 +21,12 @@ function autoAddOptions(selectId: string, options: Point[]) {
         select?.appendChild(newOption);
     });
 }
-
-
 autoAddOptions("start", points)
 autoAddOptions("diem1", points)
 autoAddOptions("diem2", points)
 autoAddOptions("diem3", points)
 
-
-const submit = document.getElementById('submit');
-submit?.addEventListener('click', () => {
+function bt1()  {
     const start = document.getElementById('start') as HTMLSelectElement;
     const a = document.getElementById('diem1') as HTMLSelectElement;
     const b = document.getElementById('diem2') as HTMLSelectElement;
@@ -65,7 +61,7 @@ submit?.addEventListener('click', () => {
     
 
     const modifiedData = [];
-    const point: Point[] = [];
+
     // Iterate through the data array and compare each element to the one before it
     for (let i = 0; i < p.length; i++) {
         if (p[i] !== p[i - 1]) {
@@ -98,17 +94,46 @@ submit?.addEventListener('click', () => {
         })
     }
     point.forEach(m)
-    const rm = document.getElementById('rm');
-    rm?.addEventListener('click', reSet)
-    function reSet() {
-        point.forEach((e, index) => {
+   
 
-            Marker[index].setMap(null)
-            flightPath.setMap(null)
-        })
-    }
+}
+function reSet() {
+    point.forEach(( e,index) => {
+        Marker[index].setMap(null)
+        flightPath.setMap(null)
+    })
+}
+function bt2() {
+    const start = document.getElementById('start') as HTMLSelectElement;
+    const a = document.getElementById('diem1') as HTMLSelectElement;
+    const b = document.getElementById('diem2') as HTMLSelectElement;
+    const c = document.getElementById('diem3') as HTMLSelectElement;
+    const StartValue = start.value.toLocaleUpperCase();
+    const diem1 = a.value.toLocaleUpperCase();
+    const diem2 = b.value.toLocaleUpperCase();
+    const diem3 = c.value.toLocaleUpperCase();
+    const start_diem1 = g.dijkstra(StartValue, diem1);
+    const start_diem2=g.dijkstra(StartValue,diem2);
+    const start_diem3=g.dijkstra(StartValue,diem3);
 
-})
+    const diem1_diem2 = g.dijkstra(diem1, diem2);
+    const diem1_diem3 = g.dijkstra(diem1, diem3);
+    const diem2_diem3 = g.dijkstra(diem2, diem3);
+
+
+    // console.log(start_diem1, start_diem2, start_diem3)
+    const cc:src[]=[];
+    cc.push(start_diem1,start_diem2,start_diem3,diem1_diem2,diem1_diem3,diem2_diem3);
+    console.log(cc);
+    const p:srcPoint[]=[];
+  
+}
+const submit = document.getElementById('b1');
+submit?.addEventListener('click',bt1);
+const submit2 = document.getElementById('b2');
+submit2?.addEventListener('click',bt2);
+const rm = document.getElementById('rm');
+rm?.addEventListener('click', reSet);
 
 function initMap(): void {
     map = new google.maps.Map(
