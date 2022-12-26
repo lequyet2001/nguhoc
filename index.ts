@@ -1,11 +1,11 @@
-import { points, triangleCoords,src,srcPoint } from "./Src/data";
+import { points, triangleCoords, } from "./Src/data";
 import { Point, } from './Src/class';
 import { g } from './Src/makedt';
 
 let map: google.maps.Map;
 let Marker: google.maps.Marker[] = [];
 let flightPath: google.maps.Polyline;
-const point: Point[] = [];
+const path:Point[] = [];
 const PATH_MAIN_MAP = {
     zoom: 16,
     center: { lat: 21.001590, lng: 105.845727 },
@@ -25,8 +25,18 @@ autoAddOptions("start", points)
 autoAddOptions("diem1", points)
 autoAddOptions("diem2", points)
 autoAddOptions("diem3", points)
-
-function bt1()  {
+function consvertStringToPoint(params: string[]):Point[] {
+    const x: Point[] = [];
+    params.forEach(e => {
+        points.forEach(e2 => {
+            if (e === e2.name) {
+                x.push(e2);
+            }
+        })
+    })
+    return x;
+}
+function bt1() {
     const start = document.getElementById('start') as HTMLSelectElement;
     const a = document.getElementById('diem1') as HTMLSelectElement;
     const b = document.getElementById('diem2') as HTMLSelectElement;
@@ -36,16 +46,14 @@ function bt1()  {
     const diem2 = b.value.toLocaleUpperCase();
     const diem3 = c.value.toLocaleUpperCase();
     const start_diem1 = g.dijkstra(StartValue, diem1);
-    const start_diem2=g.dijkstra(StartValue,diem2);
-    const start_diem3=g.dijkstra(StartValue,diem3);
+    const start_diem2 = g.dijkstra(StartValue, diem2);
+    const start_diem3 = g.dijkstra(StartValue, diem3);
 
     const diem1_diem2 = g.dijkstra(diem1, diem2);
     const diem1_diem3 = g.dijkstra(diem1, diem3);
     const diem2_diem3 = g.dijkstra(diem2, diem3);
 
-    // const diem2_diem3 = g.dijkstra(diem2, diem3);
-    // const start21=g.dijkstra(StartValue,diem2)
-    console.log(start_diem1)
+   
     const p: string[] = [];
     start_diem1.path.forEach(e => {
         p.push(e)
@@ -56,10 +64,8 @@ function bt1()  {
     diem2_diem3.path.forEach(e => {
         p.push(e)
     })
-    const distance = diem1_diem2.distance + diem2_diem3.distance + start_diem1.distance;
-    console.log(distance)
+  
     
-
     const modifiedData = [];
 
     // Iterate through the data array and compare each element to the one before it
@@ -68,14 +74,9 @@ function bt1()  {
             modifiedData.push(p[i]);
         }
     }
-    console.log(modifiedData)
-    modifiedData.forEach(e => {
-        points.forEach(e2 => {
-            if (e === e2.name) {
-                point.push(e2)
-            }
-        })
-    })
+   
+   const point:Point[] = consvertStringToPoint(modifiedData);
+    point.forEach(e=>path.push(e));
     console.log(point)
     flightPath = new google.maps.Polyline({
         path: point,
@@ -91,6 +92,7 @@ function bt1()  {
             position: e,
             map,
             label: e.name,
+            title: "Nhóm em chấm điểm vô trách nghiệm thầy thông cảm",
         })
     }
     point.forEach(m)
@@ -98,10 +100,12 @@ function bt1()  {
 
 }
 function reSet() {
-    point.forEach(( e,index) => {
+    path.forEach((e, index) => {
         Marker[index].setMap(null)
         flightPath.setMap(null)
     })
+    path.splice(0, path.length);
+    
 }
 function bt2() {
     const start = document.getElementById('start') as HTMLSelectElement;
@@ -113,25 +117,40 @@ function bt2() {
     const diem2 = b.value.toLocaleUpperCase();
     const diem3 = c.value.toLocaleUpperCase();
     const start_diem1 = g.dijkstra(StartValue, diem1);
-    const start_diem2=g.dijkstra(StartValue,diem2);
-    const start_diem3=g.dijkstra(StartValue,diem3);
+    const start_diem2 = g.dijkstra(StartValue, diem2);
+    const start_diem3 = g.dijkstra(StartValue, diem3);
 
     const diem1_diem2 = g.dijkstra(diem1, diem2);
     const diem1_diem3 = g.dijkstra(diem1, diem3);
     const diem2_diem3 = g.dijkstra(diem2, diem3);
 
+    const a1=consvertStringToPoint(start_diem1.path);
+    const a2=consvertStringToPoint(start_diem2.path);
+    const a3=consvertStringToPoint(start_diem3.path);
+    const b1=consvertStringToPoint(diem1_diem2.path);
+    const b2=consvertStringToPoint(diem1_diem3.path);
+    const c1=consvertStringToPoint(diem2_diem3.path);
 
-    // console.log(start_diem1, start_diem2, start_diem3)
-    const cc:src[]=[];
-    cc.push(start_diem1,start_diem2,start_diem3,diem1_diem2,diem1_diem3,diem2_diem3);
-    console.log(cc);
-    const p:srcPoint[]=[];
+    const p:[{distance:number,path:Point[]}]=[
+        {distance:start_diem1.distance,path:a1},
+        {distance:start_diem2.distance,path:a2},
+        {distance:start_diem3.distance,path:a3},
+        {distance:diem1_diem2.distance,path:b1},
+        {distance:diem1_diem3.distance,path:b2},
+        {distance:diem2_diem3.distance,path:c1},
+    ]
+   
   
 }
+
+
+
+
+
 const submit = document.getElementById('b1');
-submit?.addEventListener('click',bt1);
+submit?.addEventListener('click', bt1);
 const submit2 = document.getElementById('b2');
-submit2?.addEventListener('click',bt2);
+submit2?.addEventListener('click', bt2);
 const rm = document.getElementById('rm');
 rm?.addEventListener('click', reSet);
 
