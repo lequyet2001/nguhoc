@@ -1,5 +1,5 @@
 import { points, triangleCoords, } from "./Src/data";
-import { Point, } from './Src/class';
+import { Point} from './Src/class';
 import { g } from './Src/makedt';
 
 let map: google.maps.Map;
@@ -134,24 +134,36 @@ function bt2() {
     const b2=consvertStringToPoint(diem1_diem3.path);
     const c1=consvertStringToPoint(diem2_diem3.path);
 
-    // const p:[{distance:number,path:Point[]}]=[
-    //     {distance:start_diem1.distance,path:a1},
-    //     {distance:start_diem2.distance,path:a2},
-    //     {distance:start_diem3.distance,path:a3},
-    //     {distance:diem1_diem2.distance,path:b1},
-    //     {distance:diem1_diem3.distance,path:b2},
-    //     {distance:diem2_diem3.distance,path:c1},
-    // ]
-   
-    let m = (e: Point, index: number) => {
-        Marker[index] = new google.maps.Marker({
-            position: e,
-            map,
-            label: e.name,
-            title: "Nhóm em chấm điểm vô trách nghiệm thầy thông cảm",
+    const lol:{distance:number,path:Point[],name:string}[]=[
+        {distance:start_diem1.distance,path:a1,name:"start_diem1:1"},
+        {distance:start_diem2.distance,path:a2,name:"start_diem2:2"},
+        {distance:start_diem3.distance,path:a3,name:"start_diem3:3"},
+        {distance:diem1_diem2.distance,path:b1,name:"diem1_diem2:4"},
+        {distance:diem1_diem3.distance,path:b2,name:"diem1_diem3:5"},
+        {distance:diem2_diem3.distance,path:c1,name:"diem2_diem3:6"},
+    ]   
+
+    // console.log(lol);
+    lol.sort((a, b) => a.distance - b.distance);
+    const lol2:Point[]=[];
+    lol.forEach(e=>{
+        e.path.forEach(e2=>{
+            lol2.push(e2);
         })
-    }
-    points.forEach(m)
+    })
+    console.log(lol2);
+    
+
+
+    // let m = (e: Point, index: number) => {
+    //     Marker[index] = new google.maps.Marker({
+    //         position: e,
+    //         map,
+    //         label: e.name,
+    //         title: "Nhóm em chấm điểm vô trách nghiệm thầy thông cảm",
+    //     })
+    // }
+    // points.forEach(m)
 }
 
 
