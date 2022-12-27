@@ -1,5 +1,4 @@
 
-
 class priorityQueue {
     values;
     constructor() {
@@ -31,15 +30,21 @@ export class weightedGraph {
             this.adjacenyList[vertex] = [];
         }
     }
-    add(data) {
-        this.addVertex(data);
-    }
-   
-    addEdge(vertex1, vertex2, weight) {
-        
-        this.adjacenyList[vertex1].push({ node: vertex2, weight });
-        this.adjacenyList[vertex2].push({ node: vertex1, weight });
-    }
+    
+
+    addEdge(vertex1, vertex2, point: Point[]) {
+            let weight = 0;
+            const point1: Point = point.find(p => p.name === vertex1) || new Point(0,0,"0");
+            const point2: Point = point.find(p => p.name === vertex2) || new Point(0,0,"0");
+            
+            // const point2: Point =
+            weight=point1.distanceTo(point2);
+            // weight=1;
+            this.adjacenyList[vertex1].push({ node: vertex2, weight });
+            this.adjacenyList[vertex2].push({ node: vertex1, weight });
+            // console.log(`distance between ${vertex1} and ${vertex2} is ${weight}`);
+            
+        }
 
     removeEdge(vertex1, vertex2) {
         this.adjacenyList[vertex1] = this.adjacenyList[vertex1].filter(
@@ -56,13 +61,13 @@ export class weightedGraph {
         delete this.adjacenyList[vertex];
     }
 
-    dijkstra(start:string, end:string) {
+    dijkstra(start: string, end: string) {
         const nodes = new priorityQueue();
         const distances = {};
         const previous = {};
-        let smallest:any;
+        let smallest;
         let path = [];
-        let distance=0;
+        let distance = 0;
         // build up initial state
         for (let vertex in this.adjacenyList) {
             if (vertex === start) {
@@ -81,7 +86,6 @@ export class weightedGraph {
             if (smallest === end) {
                 while (previous[smallest]) {
                     path.push(smallest);
-                    
                     distance += this.adjacenyList[previous[smallest]].find(n => n.node === smallest).weight;
                     smallest = previous[smallest];
                 }
@@ -115,7 +119,7 @@ export class weightedGraph {
 
 
 export class Point {
-    
+
     constructor(public lat: number, public lng: number, public name: string) { }
 
     // Hàm tính khoảng cách giữa hai điểm
@@ -132,7 +136,7 @@ export class Point {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c;
-    }        
+    }
 }
 export function findShortestPath(points: Point[]): Point[] {
     // Khởi tạo danh sách các điểm đã xét và điểm hiện tại là điểm đầu tiên trong mảng points

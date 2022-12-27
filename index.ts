@@ -10,7 +10,10 @@ const PATH_MAIN_MAP = {
     zoom: 16,
     center: { lat: 21.001590, lng: 105.845727 },
 }
-
+console.log(g.dijkstra("1","34"))
+console.log(g.dijkstra("34","106"))
+console.log(g.dijkstra("1","106"))
+console.log(g.dijkstra("1","127"))
 
 function autoAddOptions(selectId: string, options: Point[]) {
     const select = document.getElementById(selectId);
@@ -21,10 +24,10 @@ function autoAddOptions(selectId: string, options: Point[]) {
         select?.appendChild(newOption);
     });
 }
-autoAddOptions("start", points)
-autoAddOptions("diem1", points)
-autoAddOptions("diem2", points)
-autoAddOptions("diem3", points)
+autoAddOptions("start", points);
+autoAddOptions("diem1", points);
+autoAddOptions("diem2", points);
+autoAddOptions("diem3", points);
 function consvertStringToPoint(params: string[]):Point[] {
     const x: Point[] = [];
     params.forEach(e => {
@@ -42,17 +45,15 @@ function bt1() {
     const b = document.getElementById('diem2') as HTMLSelectElement;
     const c = document.getElementById('diem3') as HTMLSelectElement;
     const StartValue = start.value.toLocaleUpperCase();
-    const diem1 = a.value.toLocaleUpperCase();
-    const diem2 = b.value.toLocaleUpperCase();
-    const diem3 = c.value.toLocaleUpperCase();
+    const diem1 = a.value;
+    const diem2 = b.value;
+    const diem3 = c.value;
     const start_diem1 = g.dijkstra(StartValue, diem1);
-    const start_diem2 = g.dijkstra(StartValue, diem2);
-    const start_diem3 = g.dijkstra(StartValue, diem3);
 
     const diem1_diem2 = g.dijkstra(diem1, diem2);
-    const diem1_diem3 = g.dijkstra(diem1, diem3);
-    const diem2_diem3 = g.dijkstra(diem2, diem3);
 
+    const diem2_diem3 = g.dijkstra(diem2, diem3);
+   
    
     const p: string[] = [];
     start_diem1.path.forEach(e => {
@@ -77,7 +78,9 @@ function bt1() {
    
    const point:Point[] = consvertStringToPoint(modifiedData);
     point.forEach(e=>path.push(e));
-    console.log(point)
+    console.log(point);
+
+   
     flightPath = new google.maps.Polyline({
         path: point,
         geodesic: true,
@@ -131,16 +134,24 @@ function bt2() {
     const b2=consvertStringToPoint(diem1_diem3.path);
     const c1=consvertStringToPoint(diem2_diem3.path);
 
-    const p:[{distance:number,path:Point[]}]=[
-        {distance:start_diem1.distance,path:a1},
-        {distance:start_diem2.distance,path:a2},
-        {distance:start_diem3.distance,path:a3},
-        {distance:diem1_diem2.distance,path:b1},
-        {distance:diem1_diem3.distance,path:b2},
-        {distance:diem2_diem3.distance,path:c1},
-    ]
+    // const p:[{distance:number,path:Point[]}]=[
+    //     {distance:start_diem1.distance,path:a1},
+    //     {distance:start_diem2.distance,path:a2},
+    //     {distance:start_diem3.distance,path:a3},
+    //     {distance:diem1_diem2.distance,path:b1},
+    //     {distance:diem1_diem3.distance,path:b2},
+    //     {distance:diem2_diem3.distance,path:c1},
+    // ]
    
-  
+    let m = (e: Point, index: number) => {
+        Marker[index] = new google.maps.Marker({
+            position: e,
+            map,
+            label: e.name,
+            title: "Nhóm em chấm điểm vô trách nghiệm thầy thông cảm",
+        })
+    }
+    points.forEach(m)
 }
 
 
