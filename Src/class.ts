@@ -30,21 +30,17 @@ export class weightedGraph {
             this.adjacenyList[vertex] = [];
         }
     }
-    
+
 
     addEdge(vertex1, vertex2, point: Point[]) {
-            let weight = 0;
-            const point1: Point = point.find(p => p.name === vertex1) || new Point(0,0,"0");
-            const point2: Point = point.find(p => p.name === vertex2) || new Point(0,0,"0");
-            
-            // const point2: Point =
-            weight=point1.distanceTo(point2);
-            // weight=1;
-            this.adjacenyList[vertex1].push({ node: vertex2, weight });
-            this.adjacenyList[vertex2].push({ node: vertex1, weight });
-            // console.log(`distance between ${vertex1} and ${vertex2} is ${weight}`);
-            
-        }
+        let weight = 0;
+        const point1: Point = point.find(p => p.name === vertex1) || new Point(0, 0, "0");
+        const point2: Point = point.find(p => p.name === vertex2) || new Point(0, 0, "0");
+        weight = point1.distanceTo(point2);
+        this.adjacenyList[vertex1].push({ node: vertex2, weight });
+        this.adjacenyList[vertex2].push({ node: vertex1, weight });
+        // console.log(`distance between ${vertex1} and ${vertex2} is ${weight}`);
+    }
 
     removeEdge(vertex1, vertex2) {
         this.adjacenyList[vertex1] = this.adjacenyList[vertex1].filter(
