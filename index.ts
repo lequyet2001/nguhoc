@@ -107,8 +107,8 @@ function bt1() {
     }
     point[0].forEach(m)
 
-
 }
+
 function reSet() {
     path.forEach((e, index) => {
         Marker[index].setMap(null)
@@ -161,42 +161,8 @@ function bt2() {
     const bC = consvertStringToPoint(B_C.path, B_C.distance);
     const cB = consvertStringToPoint(C_B.path, C_B.distance);
 
-    const p = [sA, sB, sC, aB, bA, aC, cA, bC, cB];
-
-    // console.log(p);
-
-    // const newSrc: Point[] = [];
-
-    // let v: Point[] = [];
-    // if (p[0][1] <= p[1][1] && p[0][1] <= p[2][1]) {
-    //     if (p[3][1] <= p[7][1]) {
-    //         v = (p[0][0].concat(p[3][0], p[7][0]));
-    //     }
-    //     else {
-    //         v = (p[0][0].concat(p[7][0], p[3][0]));
-    //     };
-    // }
-    // else if (p[1][1] <= p[0][1] && p[1][1] <= p[2][1]) {
-    //     if (p[4][1] <=  p[5][1]) {
-    //         v = (p[1][0].concat(p[4][0], p[5][0]));
-    //     }
-    //     else {
-    //         v = (p[1][0].concat(p[5][0], p[4][0]));
-    //     };
-    // }
-    // else if (p[2][1] <= p[1][1] && p[2][1] <= p[0][1]) {
-    //     if (p[6][1] <= p[8][1]) {
-    //         v = (p[2][0].concat(p[6][0], p[8][0]));
-    //     }
-    //     else {
-    //         v = (p[2][0].concat(p[8][0], p[6][0]));
-    //     };
-    // }
-
-
-    // console.log(v);
-
-
+    const p = {sA, sB, sC, aB, bA, aC, cA, bC, cB};
+    
     // flightPath2 = new google.maps.Polyline({
     //     path: v,
     //     geodesic: true,
