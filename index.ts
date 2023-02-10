@@ -1,5 +1,5 @@
 import { points, triangleCoords, } from "./Src/data";
-import { Point } from './Src/class';
+import { Point,weightedGraph } from './Src/class';
 import { g } from './Src/makedt';
 import { Console } from "console";
 
@@ -15,10 +15,16 @@ const PATH_MAIN_MAP = {
     zoom: 16,
     center: { lat: 21.001590, lng: 105.845727 },
 }
+interface Vertex {
+    name: string;
+    edges: Map<string, number>;
+    visited: boolean;
+  }
+  
 
-
-
-
+  
+  
+  
 
 function autoAddOptions(selectId: string, options: Point[]) {
     const select = document.getElementById(selectId);
@@ -43,7 +49,7 @@ function consvertStringToPoint(params: String[], distance: Number): any {
         })
     })
 
-    return [x, distance];
+    return [x,distance];
 }
 function bt1() {
     const start = document.getElementById('start') as HTMLSelectElement;
@@ -72,7 +78,7 @@ function bt1() {
         p.push(e)
     })
 
-    console.log("start_diem1:", start_diem1)
+    console.log("start_diem1:", start_diem1.distance)
     const modifiedData = [];
 
     // Iterate through the data array and compare each element to the one before it
@@ -143,14 +149,34 @@ function bt2() {
 
     const B_C = g.dijkstra(diem2, diem3);
     const C_B = g.dijkstra(diem3, diem2);
+    console.log({start_A,start_B,start_C,A_B,B_A,A_C,C_A,C_B,B_C});
 
-    const src = [start_A, start_B, start_C, A_B, B_A, A_C, C_A, B_C, C_B];
+    // const src = [start_A, start_B, start_C, A_B, B_A, A_C, C_A, B_C, C_B];
     // console.log(src);
 
-
+    // const vertices: Vertex[] = [
+    //     {name:"S",edges:new Map([["A",start_A.distance],["B",start_B.distance],["C",start_C.distance]]),visited:false},
+    //     {name:"A",edges:new Map([["S",start_A.distance],["B",A_B.distance],["C",A_C.distance]]),visited:false},
+    //     {name:"B",edges:new Map([["S",start_B.distance],["A",B_A.distance],["C",B_C.distance]]),visited:false},
+    //     {name:"C",edges:new Map([["S",start_C.distance],["B",C_B.distance],["A",C_A.distance]]),visited:false}
+    // ]
+    // function DFS(start: Vertex) {
+    //     console.log(start.name);
+    //     start.visited = true;
+      
+    //     for (const [neighborName, weight] of start.edges) {
+    //       const neighbor = vertices.find(v => v.name === neighborName);
+    //       if (!neighbor || neighbor.visited) {
+    //         continue;
+    //       }
+      
+    //       DFS(neighbor);
+    //     }
+    //   }
+    //   console.log(DFS(vertices[0]))
     const sA = consvertStringToPoint(start_A.path, start_A.distance);
     const sB = consvertStringToPoint(start_B.path, start_B.distance);
-    const sC = consvertStringToPoint(start_C.path, start_B.distance);
+    const sC = consvertStringToPoint(start_C.path, start_C.distance);
 
     const aB = consvertStringToPoint(A_B.path, A_B.distance);
     const bA = consvertStringToPoint(B_A.path, B_A.distance);
@@ -160,27 +186,74 @@ function bt2() {
 
     const bC = consvertStringToPoint(B_C.path, B_C.distance);
     const cB = consvertStringToPoint(C_B.path, C_B.distance);
+    // console.log({sA, sB,sC, aB, bA,aC,cA,cB,bC})
+    const src=[];
+   const inner=document.getElementById("dg");
+   let distacne=0;
+    console.log(src)
+    if(sA[1] <= sB[1] && sA[1] <= sC[1]){
+       sA[0].forEach(e=>src.push(e));
+       console.log("th1");
+       if(aB[1] <=aC[1]){
+        aB[0].forEach(e=>src.push(e));
+        bC[0].forEach(e=>src.push(e));
 
-    const p = {sA, sB, sC, aB, bA, aC, cA, bC, cB};
-    
-    // flightPath2 = new google.maps.Polyline({
-    //     path: v,
-    //     geodesic: true,
-    //     strokeColor: "green",
-    //     strokeOpacity: 1.0,
-    //     strokeWeight: 2,
-    // });
+        inner.innerText="Start->1->2->3";
+       }else{
+        aC[0].forEach(e=>src.push(e));
+        cB[0].forEach(e=>src.push(e));
+        inner.innerText="Start->1->3->2";
+       }
+   } 
+   else if(sB[1] <= sA[1] && sB[1] <= sC[1]){
+    console.log("th2");
+        sB[0].forEach(e=>src.push(e));
+        if(bC[1] <= bA[1]){
+            bC[0].forEach(e=>src.push(e));
+            cA[0].forEach(e=>src.push(e));
+            inner.innerText="Start->2->3->1";
+        }else{
+            bA[0].forEach(e=>src.push(e));
+            aC[0].forEach(e=>src.push(e));
+            inner.innerText="Start->2->1->3";
+        }
+   }
+   else if(sC[1] <= sA[1] && sC[1]<=sB[1]){
+    console.log("th3");
+        sC[0].forEach(e=>src.push(e));
+        if(cA[1] <= cB[1]){
+            cA[0].forEach(e=>src.push(e));
+            aB[0].forEach(e=>src.push(e));
+            inner.innerText="Start->3->1->2";
+        }
+        else{
+            cB[0].forEach(e=>src.push(e));
+            bA[0].forEach(e=>src.push(e));
+            inner.innerText="Start->3->2->1";
+        }
+   }
 
-    // flightPath2.setMap(map);
-    // let m = (e: Point, index: number) => {
-    //     Marker2[index] = new google.maps.Marker({
-    //         position: e,
-    //         map,
-    //         label: e.name,
-    //     })
-    // }
-    // v.forEach(m)
-    // v.forEach(e => path2.push(e));
+
+
+   console.log(src)
+    flightPath2 = new google.maps.Polyline({
+        path: src,
+        geodesic: true,
+        strokeColor: "green",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    flightPath2.setMap(map);
+    let m = (e: Point, index: number) => {
+        Marker2[index] = new google.maps.Marker({
+            position: e,
+            map,
+            label: e.name,
+        })
+    }
+    src.forEach(m)
+    src.forEach(e => path2.push(e));
 }
 
 

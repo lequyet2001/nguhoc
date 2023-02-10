@@ -41,7 +41,10 @@ export class weightedGraph {
         this.adjacenyList[vertex2].push({ node: vertex1, weight });
         // console.log(`distance between ${vertex1} and ${vertex2} is ${weight}`);
     }
-
+    addEdge2(a,b,c){
+        this.adjacenyList[a].push({ node: b, c });
+        this.adjacenyList[b].push({ node: a, c });
+    }
     removeEdge(vertex1, vertex2) {
         this.adjacenyList[vertex1] = this.adjacenyList[vertex1].filter(
             v => v !== vertex2
@@ -110,6 +113,48 @@ export class weightedGraph {
             path: path.concat(smallest).reverse()
         };
     }
+   
+
+    TSP(start) {
+        let visited = [];
+        let path = [];
+        let minPath = Infinity;
+        let currentPath = 0;
+        let vertices = Object.keys(this.adjacenyList);
+    
+        const tspHelper = (vertex , visited , currentPath) => {
+          path.push(vertex);
+          visited[vertex] = true;
+          if (path.length === vertices.length) {
+            for (let i = 0; i < this.adjacenyList[vertex].length; i++) {
+              if (this.adjacenyList[vertex][i].node === start) {
+                currentPath += this.adjacenyList[vertex][i].weight;
+                if (currentPath < minPath) {
+                  minPath = currentPath;
+                  path.push(start);
+                }
+              }
+            }
+            return;
+          }
+          for (let i = 0; i < this.adjacenyList[vertex].length; i++) {
+            let currentNode = this.adjacenyList[vertex][i].node;
+            let weight = this.adjacenyList[vertex][i].weight;
+            if (!visited[currentNode]) {
+              tspHelper.call(this, currentNode, visited, currentPath + weight);
+            }
+          }
+          path.pop();
+          visited[vertex] = false;
+        }
+    
+        tspHelper.call(this, start, visited, currentPath);
+    
+        return {
+          path: path
+          }
+        }
+
 }
 
 
