@@ -151,29 +151,6 @@ function bt2() {
     const C_B = g.dijkstra(diem3, diem2);
     console.log({start_A,start_B,start_C,A_B,B_A,A_C,C_A,C_B,B_C});
 
-    // const src = [start_A, start_B, start_C, A_B, B_A, A_C, C_A, B_C, C_B];
-    // console.log(src);
-
-    // const vertices: Vertex[] = [
-    //     {name:"S",edges:new Map([["A",start_A.distance],["B",start_B.distance],["C",start_C.distance]]),visited:false},
-    //     {name:"A",edges:new Map([["S",start_A.distance],["B",A_B.distance],["C",A_C.distance]]),visited:false},
-    //     {name:"B",edges:new Map([["S",start_B.distance],["A",B_A.distance],["C",B_C.distance]]),visited:false},
-    //     {name:"C",edges:new Map([["S",start_C.distance],["B",C_B.distance],["A",C_A.distance]]),visited:false}
-    // ]
-    // function DFS(start: Vertex) {
-    //     console.log(start.name);
-    //     start.visited = true;
-      
-    //     for (const [neighborName, weight] of start.edges) {
-    //       const neighbor = vertices.find(v => v.name === neighborName);
-    //       if (!neighbor || neighbor.visited) {
-    //         continue;
-    //       }
-      
-    //       DFS(neighbor);
-    //     }
-    //   }
-    //   console.log(DFS(vertices[0]))
     const sA = consvertStringToPoint(start_A.path, start_A.distance);
     const sB = consvertStringToPoint(start_B.path, start_B.distance);
     const sC = consvertStringToPoint(start_C.path, start_C.distance);
@@ -284,10 +261,6 @@ function initMap(): void {
     });
 
     bermudaTriangle.setMap(map);
-
-
-
-
 
 }
 declare global {
